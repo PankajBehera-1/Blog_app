@@ -1,0 +1,18 @@
+<!-- Show.html.erb -->
+
+<h1><%= @post.title %></h1>
+<p><%= @post.content %></p>
+
+<% if @post.image.present? %>
+  <%= image_tag @post.image %>
+<% end %>
+
+<% if @post.video.present? %>
+  <video controls>
+    <source src="/videos/<%= @post.video %>" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+<% end %>
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>
