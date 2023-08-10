@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
-    before_action :set_post, only: [:show, :edit, :update, :destroy]
+    
+    before_action :authenticate_user!, except: [:index, :show]
   
     def index
       @posts = Post.all
@@ -10,11 +11,11 @@ class PostsController < ApplicationController
     end
   
     def new
-      @post = Post.new
+      @post = current_user.posts.build
     end
   
     def create
-      @post = Post.new(post_params)
+      @post = current_user.posts.build(post_params)
   
       if @post.save
         redirect_to @post, notice: 'Post was successfully created.'
@@ -27,20 +28,25 @@ class PostsController < ApplicationController
     end
   
     def update
-      if @post.update(post_params)
-        redirect_to @post, notice: 'Post was successfully updated.'
+      if @post.user == current_user
+        if @post.update(post_params)
+          redirect_to @post, notice: 'Post was successfully updated.'
+        else
+          render :edit
+        end
       else
-        render :edit
+        redirect_to @post, alert: "You don't have permission to edit this post."
       end
     end
   
     def destroy
-        @post = Post.find(params[:id])
+      if @post.user == current_user
         @post.destroy
-        
         redirect_to posts_path, notice: 'Post was successfully deleted.'
+      else
+        redirect_to @post, alert: "You don't have permission to delete this post."
+      end
     end
-      
     private
   
     def set_post
@@ -60,5 +66,11 @@ class PostsController < ApplicationController
         redirect_to('/')
     end
 
+    protected
+  
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :email, :password, :password_confirmation])
+    end
+    
   end
   

@@ -75,3 +75,6 @@ end
 gem 'cloudinary'
 
 gem 'carrierwave'
+
+gem 'devise'
+

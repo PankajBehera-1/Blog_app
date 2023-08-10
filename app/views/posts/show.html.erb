@@ -4,7 +4,7 @@
 <p><%= @post.content %></p>
 
 <% if @post.image.present? %>
-  <%= image_tag @post.image %>
+  <%= image_tag @post.image.url ,width: "30%" %>
 <% end %>
 
 <% if @post.video.present? %>
@@ -16,3 +16,4 @@
 
 <%= link_to 'Edit', edit_post_path(@post) %> |
 <%= link_to 'Back', posts_path %>
+
