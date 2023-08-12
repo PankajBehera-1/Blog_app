@@ -3,7 +3,7 @@ class PostsController < ApplicationController
     before_action :authenticate_user!, except: [:index, :show]
   
     def index
-      @posts = Post.all
+      @posts = Post.includes(:user).all
     end
   
     def show
@@ -40,13 +40,16 @@ class PostsController < ApplicationController
     end
   
     def destroy
+      @post = Post.find(params[:id]) # Make sure to fetch the post
       if @post.user == current_user
         @post.destroy
         redirect_to posts_path, notice: 'Post was successfully deleted.'
       else
-        redirect_to @post, alert: "You don't have permission to delete this post."
+        redirect_to posts_path, alert: 'You are not authorized to delete this post.'
       end
     end
+    
+
     private
   
     def set_post
@@ -74,3 +77,4 @@ class PostsController < ApplicationController
     
   end
   
+

@@ -3,9 +3,10 @@
 <style>
 body {
 
-  background-color: sky;
+  background-color: green;
   padding: 10px;
   background: white;
+ 
 }
 .header {
   padding: 30px;
@@ -38,33 +39,78 @@ body {
   background-color: green;
   color: black;
 }
+/* Style for avatars */
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Default style for avatars without an image */
+.default-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+.post {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+
+
 
 </style>
 
 <div class="header">
-  <h1>WELCOME TO BLOG APP</h1>
+  <h1>Create Your Own Beautiful Blog</h1>
   <p>Here you can see others blog and also you can add your blogs</p>
+  <h1>
+  <%= link_to ' Create Your Blog', new_post_path %>
+  </h1>
 </div>
 
 <div class="topnav">
   <a href="#">Home</a>
   <a href="#">About</a>
   <a href="#">contact</a>
-  <a href="#" style="float:right">logout</a>
+  <a href="#" style="float:right">
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete, form: {turbolink: false} %>
+  </a>
 </div>
 
-<h1>
-<%= link_to ' Create New Post', new_post_path %>
-</h1>
+
 <ul>
   <% @posts.each do |post| %>
     <li>
+      <div class="post">
+        
+        <% if post.user.avatar.present? %>
+          <%= image_tag post.user.avatar, class: "avatar" %>
+        <% else %>
+          <div class="default-avatar"><img src="https://tse1.mm.bing.net/th?id=OIP.UDoPY83CNyZbtLbzSRDVxQHaHa&pid=Api&P=0&h=180" alt="default-avatar" class="default-avatar"></div>
+        <% end %>
+        <b>
+        <p><%= post.user.id %> - <%= post.user.email %></p>
+        </b>
+        
+      </div>    
       <h2><%= link_to post.title, post_path(post) %></h2>
+      <p>Posted on: <%= post.created_at.strftime("%B %e, %Y at %l:%M %p") %></p>
       <p><%= truncate(post.content, length: 500) %></p>
       <%= form_for(post, :html => { :method => :delete, :remote => true, data: { confirm: "Are you sure?"} }) do |f| %>
-       <%= f.submit :value => "Delete" %>
+      <%= f.submit :value => "Delete" %>
       <% end %>
-
+      
       
       
       <% if post.image.present? %>
@@ -77,6 +123,7 @@ body {
           Your browser does not support the video tag.
         </video>
       <% end %>
+      
       
       <p><%= link_to 'Read more', post_path(post) %></p>
     </li>
