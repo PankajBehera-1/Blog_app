@@ -1,49 +1,102 @@
-<%= form_with(model: @post, local: true) do |form| %>
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
-  
-  <div class="field">
-    <%= form.label :content %>
-    <%= form.text_area :content %>
-  </div>
-  
-  <div class="field">
-    <%= form.label :image %>
-    <%= form.file_field :image %>
-  </div>
-  
-  <div class="field">
-    <%= form.label :video %>
-    <%= form.file_field :video %>
-  </div>
-  
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
 
+<div class="post-container">
+  <%= form_with(model: @post, local: true) do |form| %>
+    <div class="field">
+      <%= form.label :title %>
+      <%= form.text_field :title %>
+    </div>
+    
+    <div class="field">
+      <%= form.label :content %>
+      <%= form.text_area :content %>
+    </div>
+    
+    <div class="field">
+      <%= form.label :image %>
+      <%= form.file_field :image %>
+    </div>
+    
+    <div class="field">
+      <%= form.label :video %>
+      <%= form.file_field :video %>
+    </div>
+    
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+  <% end %>
+</div>
 
 
 <style>
-    body {
-        display: flex;
-        width: 10%;
-        flex-direction: column;
-        margin: 40px auto;
-        text-align: center;
-    }
-   
-    input[type="submit"]
-    {
-        background-color: red;
-        border: none;
-        color: white;
-        padding: 10px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-    }
+ 
+  input[type="submit"]
+  {
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+  
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f2f2f2;
+}
+
+.post-container {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 400px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.post-form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input,
+textarea {
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.post-button {
+  background-color: #3366cc;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.post-button:hover {
+  background-color: #254685;
+}
+</style>
+
+
 </style>

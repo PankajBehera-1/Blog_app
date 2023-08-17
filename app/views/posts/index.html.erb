@@ -11,7 +11,7 @@ body {
 .header {
   padding: 30px;
   text-align: center;
-  background: yellow;
+  background: #00FF00;
 }
 
 .header h1 {
@@ -21,7 +21,7 @@ body {
 /* Style the top navigation bar */
 .topnav {
   overflow: hidden;
-  background-color: #333;
+  background-color:  #000000;
 }
 
 /* Style the topnav links */
@@ -36,7 +36,7 @@ body {
 
 /* Change color on hover */
 .topnav a:hover {
-  background-color: green;
+  background-color: red;
   color: black;
 }
 /* Style for avatars */
@@ -52,7 +52,7 @@ body {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: lightgray;
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,19 +66,54 @@ body {
   margin-bottom: 20px;
 }
 
+.button {
+  background-color: #3366cc;
+  color: #fff;
+  border: none;
+  padding: 15px 0px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
 
+.button:hover {
+  background-color: #254685;
+}
 
+.bg-img {
+  /* The image used */
+  background-color: WHITE;
+
+  min-height: 380px;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+  /* Needed to position the navbar */
+  position: relative;
+}
+label.logo{
+  color: #FF007F;
+  font-size: 35px;
+  line-height: 10px;
+  padding: 0 100px;
+  font-weight: bold;
+  float: right;
+}
 
 </style>
 
 <div class="header">
+  <b><label class="logo">DesignX</label></b>
+      
   <h1>Create Your Own Beautiful Blog</h1>
   <p>Here you can see others blog and also you can add your blogs</p>
   <h1>
   <%= link_to ' Create Your Blog', new_post_path %>
   </h1>
 </div>
-
 <div class="topnav">
   <a href="#">Home</a>
   <a href="#">About</a>
@@ -87,47 +122,45 @@ body {
   <%= button_to 'Logout', destroy_user_session_path, method: :delete, form: {turbolink: false} %>
   </a>
 </div>
+<div class="bg-img">
 
-
-<ul>
-  <% @posts.each do |post| %>
-    <li>
-      <div class="post">
+  <ul>
+    <% @posts.each do |post| %>
+      <li>
+        <div class="post">
+          
+          <% if post.user.avatar.present? %>
+            <%= image_tag post.user.avatar, class: "avatar" %>
+          <% else %>
+            <div class="default-avatar"><img src="https://tse3.mm.bing.net/th?id=OIP.51xTX_-j8aYEbFoF7UkScQHaHa&pid=Api&P=0&h=180" alt="default-avatar" class="default-avatar"></div>
+          <% end %>
+          <b>
+          <p><%= post.user.id %> - <%= post.user.email %></p>
+          </b>
+          
+        </div>    
+        <h1><%= link_to post.title, post_path(post) %></h1>
+        <h3><p>Posted on: <%= post.created_at.strftime("%B %e, %Y at %l:%M %p") %></p></h3>
+        <p><%= truncate(post.content, length: 500) %></p>
         
-        <% if post.user.avatar.present? %>
-          <%= image_tag post.user.avatar, class: "avatar" %>
-        <% else %>
-          <div class="default-avatar"><img src="https://tse1.mm.bing.net/th?id=OIP.UDoPY83CNyZbtLbzSRDVxQHaHa&pid=Api&P=0&h=180" alt="default-avatar" class="default-avatar"></div>
+        <% if post.image.present? %>
+          <%= image_tag post.image.url ,width: "30%" %>
         <% end %>
-        <b>
-        <p><%= post.user.id %> - <%= post.user.email %></p>
-        </b>
+
+        <% if post.video.present? %>
+          <video controls>
+            <source src="/videos/<%= post.video %>" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        <% end %>
+        <%= form_for(post, :html => { :method => :delete, :remote => true, data: { confirm: "Are you sure?"} }) do |f| %>
+        <%= f.submit :value => "Delete" %>
+        <% end %>
         
-      </div>    
-      <h2><%= link_to post.title, post_path(post) %></h2>
-      <p>Posted on: <%= post.created_at.strftime("%B %e, %Y at %l:%M %p") %></p>
-      <p><%= truncate(post.content, length: 500) %></p>
-      <%= form_for(post, :html => { :method => :delete, :remote => true, data: { confirm: "Are you sure?"} }) do |f| %>
-      <%= f.submit :value => "Delete" %>
-      <% end %>
-      
-      
-      
-      <% if post.image.present? %>
-        <%= image_tag post.image.url ,width: "30%" %>
-      <% end %>
+        
+        <p><%= link_to 'Read more', post_path(post) %></p>
+      </li>
+    <% end %>
+  </ul>
 
-      <% if post.video.present? %>
-        <video controls>
-          <source src="/videos/<%= post.video %>" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-      <% end %>
-      
-      
-      <p><%= link_to 'Read more', post_path(post) %></p>
-    </li>
-  <% end %>
-</ul>
-
-
+</div>
