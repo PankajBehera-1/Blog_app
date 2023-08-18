@@ -1,9 +1,10 @@
 <!-- app/views/posts/edit.html.erb -->
+<div class="h2">
+    <h1>Edit Post</h1>
 
-<h1>Edit Post</h1>
+    <%= render 'form' %>
 
-<%= render 'form' %>
+    <%= link_to 'Show', @post %> 
 
-<%= link_to 'Show', @post %> 
-
-<%= link_to 'Back', posts_path %>
+    <%= link_to 'Back', posts_path %>
+</div>

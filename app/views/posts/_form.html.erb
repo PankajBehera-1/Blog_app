@@ -1,5 +1,7 @@
 
 <div class="post-container">
+  
+ 
   <%= form_with(model: @post, local: true) do |form| %>
     <div class="field">
       <%= form.label :title %>
@@ -50,7 +52,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f2f2f2;
+  background-image: url("https://i.pinimg.com/originals/6f/6c/15/6f6c1538b050072b002dbc06bedaaf90.jpg");
 }
 
 .post-container {
@@ -81,6 +83,7 @@ textarea {
   margin: 5px 0;
   border: 1px solid #ccc;
   border-radius: 5px;
+  width: 380px;
 }
 
 .post-button {
@@ -99,4 +102,3 @@ textarea {
 </style>
 
 
-</style>
