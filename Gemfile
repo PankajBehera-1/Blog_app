@@ -78,3 +78,4 @@ gem 'carrierwave'
 
 gem 'devise'
 
+gem 'pry'
