@@ -3,7 +3,7 @@ class PostsController < ApplicationController
     before_action :authenticate_user!, except: [:index, :show]
   
     def index
-      @posts = Post.includes(:user).all
+      @posts = Post.includes(user: :avatar).all
     end
   
     def show

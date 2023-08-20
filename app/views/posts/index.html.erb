@@ -3,9 +3,9 @@
 <style>
 body {
 
-  background-color: green;
+  
   padding: 10px;
-  background: white;
+  background: #B6B6B4;
  
 }
 .header {
@@ -61,9 +61,10 @@ body {
 .post {
   display: flex;
   flex-wrap: wrap;
-  padding: 10px;
-  align-items: center;
-  margin-bottom: 20px;
+  background-color: #BA55D3;
+  border-redius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }
 
 .button {
@@ -124,7 +125,7 @@ label.logo{
 </div>
 <div class="bg-img">
 
-  <ul>
+  <ul style="font-size:18px">
     <% @posts.each do |post| %>
       <li>
         <div class="post">
