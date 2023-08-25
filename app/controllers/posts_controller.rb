@@ -4,6 +4,7 @@ class PostsController < ApplicationController
   
     def index
       @posts = Post.includes(user: :avatar).all
+      @current_user = current_user
     end
   
     def show
