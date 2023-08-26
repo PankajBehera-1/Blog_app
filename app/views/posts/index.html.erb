@@ -6,6 +6,8 @@ body {
   
   padding: 10px;
   background: #B6B6B4;
+  align-items: center;
+  
  
 }
 .header {
@@ -17,6 +19,20 @@ body {
 .header h1 {
   font-size: 50px;
 }
+/*post container */
+.form {
+  width: 60%;
+  height: 60%;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px #ddd;
+  border: 1px solid #ffffff36;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  
+}
+
 
 /* Style the top navigation bar */
 .topnav {
@@ -65,6 +81,7 @@ body {
   border-redius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 10px;
+  
 }
 
 
@@ -111,9 +128,17 @@ label.logo{
   <a href="#">Home</a>
   <a href="#">About</a>
   <a href="#">contact</a>
-  <a href="#" style="float:right">
-  <%= button_to 'Signout', destroy_user_session_path, method: :delete, form: {turbolink: false} %>
-  </a>
+  <% if user_signed_in? %>
+    <a href="#" style="float:right">
+    <%= button_to 'Signout', destroy_user_session_path, method: :delete, form: {turbolink: false} %>
+    </a>
+  <% else %>
+    <a href="#" style="float:right">
+    <%= link_to 'Sign In', new_user_session_path %>
+    </a>
+  <% end %>
+  
+
 </div>
 
 <div class="bg-img">
@@ -121,6 +146,7 @@ label.logo{
   <ul style="font-size:18px">
     <% @posts.each do |post| %>
       <li>
+       
         <div class="post">
           
           <% if post.user.avatar.present? %>
@@ -132,29 +158,31 @@ label.logo{
           <p><%= post.user.id %> - <%= post.user.email %></p>
           </b>
           
-        </div>    
-        <h1><%= link_to post.title, post_path(post) %></h1>
-        <h3><p>Posted on: <%= post.created_at.strftime("%B %e, %Y at %l:%M %p") %></p></h3>
-        <p><%= truncate(post.content, length: 500) %></p>
-        
-        <% if post.image.present? %>
-          <%= image_tag post.image.url ,width: "30%" %>
-        <% end %>
-
-        <% if post.video.present? %>
-          <video controls>
-            <source src="/videos/<%= post.video %>" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        <% end %>
-        <div class="button">
-          <%= form_for(post, :html => { :method => :delete, :remote => true, data: { confirm: "Are you sure?"} }) do |f| %>
-          <%= f.submit :value => "Delete" %>
+        </div>
+          <h1><%= link_to post.title, post_path(post) %></h1>
+          <h3><p>Posted on: <%= post.created_at.strftime("%B %e, %Y at %l:%M %p") %></p></h3>
+          <p><%= truncate(post.content, length: 500) %></p>
+          
+          <% if post.image.present? %>
+            <%= image_tag post.image.url ,width: "30%" %>
           <% end %>
-        </div>  
-        
-        <p><%= link_to 'Read more', post_path(post) %></p>
+
+          <% if post.video.present? %>
+            <video controls , width="30%">
+              <source src="<%= post.video.url %>" type="video/mp4">
+            </video>
+          <% end %>
+          <div class="button">
+            <% if post.user == current_user %>
+              <%= form_for(post, :html => { :method => :delete, :remote => true, data: { confirm: "Are you sure?"} }) do |f| %>
+              <%= f.submit :value => "Delete" %>
+              <% end %>
+            <% end %>
+          </div>  
+          <p><%= link_to 'Read more', post_path(post) %></p>
+       
       </li>
+
     <% end %>
   </ul>
 
