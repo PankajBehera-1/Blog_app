@@ -8,5 +8,6 @@ class User < ApplicationRecord
   has_one :avatar
   validates :username, presence: true, uniqueness: true
   attr_accessor :date_of_birth, :gender
+  mount_uploader :avatar, AvatarUploader
 end
 
