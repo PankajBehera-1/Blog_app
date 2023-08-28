@@ -8,9 +8,8 @@
   <% end %>
 
   <% if @post.video.present? %>
-    <video controls>
-      <source src="/videos/<%= @post.video %>" type="video/mp4">
-      Your browser does not support the video tag.
+    <video controls , width="30%">
+      <source src="<%= @post.video.url %>" type="video/mp4">
     </video>
   <% end %>
 
