@@ -149,7 +149,7 @@ label.logo{
        
         <div class="post">
           
-          <% if post.user.avatar.present? %>
+          <% if @post.user.avatar? %>
             <%= image_tag post.user.avatar.url, class: "avatar" %>
           <% else %>
             <div class="default-avatar"><img src="https://tse3.mm.bing.net/th?id=OIP.51xTX_-j8aYEbFoF7UkScQHaHa&pid=Api&P=0&h=180" alt="default-avatar" class="default-avatar"></div>

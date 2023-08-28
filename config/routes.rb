@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   end
   resources :posts
   root 'posts#index'
+  resources :users, only: [:new, :create]
+
   resources :avatars, only: [:create, :update, :destroy]
 
 end
