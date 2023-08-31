@@ -13,6 +13,7 @@ class Users::Registrations::SessionsController < Devise::SessionsController
 
   def destroy
     sign_out(current_user)
-    render json: { message: 'Logged out successfully' }
+
+    redirect_to posts_path, notice: 'logged out successfully !!.'
   end
 end

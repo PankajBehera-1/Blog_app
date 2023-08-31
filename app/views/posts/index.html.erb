@@ -158,8 +158,7 @@ label.logo{
 </div>
 <div class="topnav">
   <a href="#">Home</a>
-  <a href="#">About</a>
-  <a href="#">contact</a>
+  
   <% if user_signed_in? %>
     <a href="#" style="float:right">
     <%= button_to 'Signout', destroy_user_session_path, method: :delete, form: {turbolink: false} %>
